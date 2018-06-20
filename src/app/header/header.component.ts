@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     this.authState = this.store.select('auth');
   }
   public onSaveData(): void {
-    this.dataStorageService.storeRecipes().subscribe((response: Response) => console.log(response));
+    this.dataStorageService.storeRecipes();
   }
 
   public onFetchData(): void {
