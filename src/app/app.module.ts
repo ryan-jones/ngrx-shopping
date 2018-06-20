@@ -7,8 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AppRoutingModule } from './app-routing.module';
 
-
-import { AuthService } from './auth/auth.service';
 import { RecipeService } from './recipes/recipe.service';
 
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -58,7 +56,7 @@ import { AuthEffects } from './auth/auth.effects';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects])
   ],
-  providers: [RecipeService, DataStorageService, AuthService, AuthGuard],
+  providers: [RecipeService, DataStorageService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

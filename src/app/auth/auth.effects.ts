@@ -4,9 +4,12 @@ import * as AuthActions from './ngrx/auth.actions';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/do';
+
 
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import * as firebase from 'firebase';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -33,6 +36,34 @@ export class AuthEffects {
       ];
     });
 
-  constructor(private actions$: Actions) {}
+    @Effect()
+    authSignin = this.actions$
+      .ofType(AuthActions.TRY_SIGNIN)
+      .map((action: AuthActions.TrySignin) => action.payload)
+      .switchMap((signin: { username: string, password: string }) => {
+        return fromPromise(firebase.auth().signInWithEmailAndPassword(signin.username, signin.password));
+      })
+      .switchMap(() => {
+        return fromPromise(firebase.auth().currentUser.getIdToken());
+      })
+      .mergeMap((token: string) => {
+        this.router.navigate(['/']);
+        return [
+          {
+            type: AuthActions.SIGNIN
+          },
+          {
+            type: AuthActions.SET_TOKEN,
+            payload: token
+          }
+        ];
+      });
+
+    @Effect({ dispatch: false})
+    authLogout = this.actions$
+      .ofType(AuthActions.LOGOUT)
+      .do(() => this.router.navigate(['/']));
+
+  constructor(private actions$: Actions, private router: Router) {}
 
 }
