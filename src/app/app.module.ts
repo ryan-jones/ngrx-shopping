@@ -6,10 +6,14 @@ import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { RecipeService } from './recipes/recipe.service';
 
 import { DropdownDirective } from './shared/dropdown.directive';
+
+import { environment } from '../environments/environment';
 
 
 import { AppComponent } from './app.component';
@@ -54,7 +58,9 @@ import { AuthEffects } from './auth/auth.effects';
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects])
+    EffectsModule.forRoot([AuthEffects]),
+    StoreRouterConnectingModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [RecipeService, DataStorageService, AuthGuard],
   bootstrap: [AppComponent]
