@@ -6,6 +6,8 @@ import { RecipeService } from '../recipe.service';
 import { Store } from '@ngrx/store';
 import * as ShoppingListActions from '../../shopping-list/ngrx/shopping-list.actions';
 import * as fromApp from '../../store/app.reducers';
+import { Observable } from 'rxjs/internal/Observable';
+import * as fromRecipe from '../ngrx/recipe.reducers';
 
 
 @Component({
@@ -14,7 +16,7 @@ import * as fromApp from '../../store/app.reducers';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  public recipe: Recipe;
+  public recipeState: Observable<fromRecipe.State>;
   private id: number;
 
   constructor(
@@ -28,7 +30,7 @@ export class RecipeDetailComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.recipe = this.recipeService.getRecipe(this.id);
+          this.recipeState = this.store.select('recipes');
         }
       );
   }
