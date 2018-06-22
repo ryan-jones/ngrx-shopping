@@ -5,6 +5,8 @@ import * as fromApp from '../store/app.reducers';
 import * as fromAuth from './ngrx/auth.reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -12,6 +14,14 @@ export class AuthGuard implements CanActivate {
   constructor(private store: Store<fromApp.AppState>) {}
 
   public canActivate(): Observable<boolean> {
+    return this.store.select('auth')
+      .take(1)
+      .map((authState: fromAuth.State) => {
+      return authState.authenticated;
+    });
+  }
+
+  public canLoad(): Observable<boolean> {
     return this.store.select('auth')
       .take(1)
       .map((authState: fromAuth.State) => {

@@ -8,61 +8,42 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
-import { RecipeService } from './recipes/recipe.service';
-
-import { DropdownDirective } from './shared/dropdown.directive';
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 import { environment } from '../environments/environment';
 
-
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
-import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
-import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { DataStorageService } from './shared/data-storage.service';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 
-import { AuthGuard } from './auth/auth-guard.service';
 import { reducers } from './store/app.reducers';
 import { AuthEffects } from './auth/auth.effects';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
     SignupComponent,
-    SigninComponent
+    SigninComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    CoreModule,
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [RecipeService, DataStorageService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
