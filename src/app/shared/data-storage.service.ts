@@ -17,16 +17,6 @@ export class DataStorageService {
   }
 
   public getRecipes() {
-    this.httpClient.get<Recipe[]>(`${this.url}`, {
-      observe: 'body',
-      responseType: 'json'
-    }).map(recipes => {
-        recipes.forEach(recipe => {
-          if (!recipe['ingredients']) {
-            recipe['ingredients'] = [];
-          }
-        });
-        return recipes;
-      }).subscribe((recipes: Recipe[]) => this.recipeService.setRecipes(recipes));
+    
   }
 }

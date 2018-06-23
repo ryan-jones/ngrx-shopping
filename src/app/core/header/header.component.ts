@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 
-import { DataStorageService } from '../shared/data-storage.service';
+import { DataStorageService } from '../../shared/data-storage.service';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../store/app.reducers';
-import * as fromAuth from '../auth/ngrx/auth.reducers';
-import * as AuthActions from '../auth/ngrx/auth.actions';
+import * as fromApp from '../../store/app.reducers';
+import * as fromAuth from '../../auth/ngrx/auth.reducers';
+import * as AuthActions from '../../auth/ngrx/auth.actions';
+import * as RecipeActions from '../../recipes/ngrx/recipe.actions';
 
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public onFetchData(): void {
-    this.dataStorageService.getRecipes();
+    this.store.dispatch(new RecipeActions.FetchRecipes());
   }
 
   public onLogout(): void {
