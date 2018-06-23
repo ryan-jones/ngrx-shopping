@@ -34,23 +34,4 @@ export class RecipeService {
   public getRecipes(): Recipe[] {
     return this.recipes.slice();
   }
-
-  public getRecipe(index: number): Recipe {
-    return this.recipes[index];
-  }
-
-  public addRecipe(recipe: Recipe): void {
-    this.recipes.push(recipe);
-    this.recipesChanged.next(this.recipes.slice());
-  }
-
-  public updateRecipe(index: number, newRecipe: Recipe): void {
-    this.recipes[index] = newRecipe;
-    this.recipesChanged.next(this.recipes.slice());
-  }
-
-  public deleteRecipe(index: number): void {
-    this.recipes.splice(index, 1);
-    this.recipesChanged.next(this.recipes.slice());
-  }
 }
