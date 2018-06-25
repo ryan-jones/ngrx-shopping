@@ -6,7 +6,7 @@ import * as fromAuth from '../../auth/ngrx/auth.reducers';
 import * as AuthActions from '../../auth/ngrx/auth.actions';
 import * as RecipeActions from '../../recipes/ngrx/recipe.actions';
 
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',

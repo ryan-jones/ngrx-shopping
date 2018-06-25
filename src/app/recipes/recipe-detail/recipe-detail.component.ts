@@ -6,10 +6,8 @@ import * as ShoppingListActions from '../../shopping-list/ngrx/shopping-list.act
 import * as RecipeActions from '../ngrx/recipe.actions';
 import * as fromRecipe from '../ngrx/recipe.reducers';
 
-import { Observable } from 'rxjs/internal/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
-
+import { Observable } from 'rxjs/';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -37,7 +35,7 @@ export class RecipeDetailComponent implements OnInit {
 
   public onAddToShoppingList(): void {
     this.store.select('recipes')
-      .take(1)
+      .pipe(take(1))
       .subscribe((state: fromRecipe.State) => {
         this.store.dispatch(new ShoppingListActions.AddIngredients(state.recipes[this.id].ingredients));
       })
