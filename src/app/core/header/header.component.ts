@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     this.authState = this.store.select('auth');
   }
   public onSaveData(): void {
-    this.dataStorageService.storeRecipes();
+    this.store.dispatch(new RecipeActions.StoreRecipes());
   }
 
   public onFetchData(): void {

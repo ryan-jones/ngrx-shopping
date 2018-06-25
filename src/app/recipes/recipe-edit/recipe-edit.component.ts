@@ -70,7 +70,7 @@ export class RecipeEditComponent implements OnInit {
     let recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
-      this.store.select('recipe')
+      this.store.select('recipes')
         .take(1)
         .subscribe((state: fromRecipe.State) => {
           const recipe = state.recipes[this.id];
