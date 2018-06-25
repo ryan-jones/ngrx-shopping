@@ -4,9 +4,8 @@ import { Injectable } from '@angular/core';
 import * as fromApp from '../store/app.reducers';
 import * as fromAuth from './ngrx/auth.reducers';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/internal/Observable';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,17 +14,16 @@ export class AuthGuard implements CanActivate {
 
   public canActivate(): Observable<boolean> {
     return this.store.select('auth')
-      .take(1)
-      .map((authState: fromAuth.State) => {
-      return authState.authenticated;
-    });
+      .pipe(take(1),
+        map((authState: fromAuth.State) => authState.authenticated)
+      );
   }
 
   public canLoad(): Observable<boolean> {
     return this.store.select('auth')
-      .take(1)
-      .map((authState: fromAuth.State) => {
-      return authState.authenticated;
-    });
+      .pipe(
+        take(1),
+        map((authState: fromAuth.State) => authState.authenticated)
+      );
   }
 }
