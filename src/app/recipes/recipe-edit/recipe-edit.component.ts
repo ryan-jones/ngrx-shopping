@@ -27,7 +27,9 @@ export class RecipeEditComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.editMode = params['id'] !== null;
+          console.log('id', this.id);
+          this.editMode = params['id'] !== null && !isNaN(this.id);
+          console.log('editmode', this.editMode);
           this.initForm();
         }
       );
